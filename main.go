@@ -2,11 +2,11 @@ package main
 
 import (
 	"fmt"
+	"os"
 
+	"./fileutils"
 	"./mysizes"
 )
-
-import "./fileutils"
 
 func main() {
 
@@ -17,7 +17,7 @@ func main() {
 	// If it does not, a new underlying array will be allocated.
 	// Append returns the updated slice.
 	for i := 0; i < 1; i++ {
-		byteslice = append(byteslice, fileutils.FileToByteslice("files/text1.txt")...)
+		byteslice = append(byteslice, fileutils.FileToByteslice("files/pg100.txt")...)
 	}
 	fmt.Println(" ----- Playing with files / file descriptors ------ ")
 	size := len(byteslice)
@@ -37,8 +37,16 @@ func main() {
 	fmt.Println(text2slice)
 
 	fileinfo := fileutils.GetFileInfo("files/text1.txt")
+	mode := fileinfo.Mode()
 	fmt.Println(fileinfo.Name())
 	fmt.Println(fileinfo.Size())
-	fmt.Println(fileinfo.Mode())
+	fmt.Println(mode)
+	fmt.Println(fileinfo.ModTime())
+	fmt.Println(fileinfo.IsDir())
+	fmt.Println(fileinfo.Sys())
+	fmt.Println(os.ModeSymlink)
+	fmt.Println(os.ModeSetuid)
+	fmt.Println(mode & os.ModeSymlink)
+	fmt.Println(mode & os.ModeSetuid)
 
 }
